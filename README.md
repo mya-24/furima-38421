@@ -16,8 +16,8 @@ Things you may want to cover:
 ## User
 | Column               | Type       | Options                        |
 |----------------------|------------|--------------------------------|
-| nickname             | text       | null: false, unique: true      |
-| email                | text       | null: false                    |
+| nickname             | text       | null: false                    |
+| email                | text       | null: false, unique: true      |
 | encrypted_password   | text       | null: false                    |
 ### Association 
 has_many :items
@@ -32,9 +32,9 @@ has_many :delivery_info
 | description          | string     | null: false                    |
 | category             | string     | null: false                    |
 | condition            | string     | null: false                    |
-| cost_side            | string     | null: false                    |
+| cost_person          | string     | null: false                    |
 | from_address         | string     | null: false                    |
-| need_days            | string     | null: false                    |
+| prepare_days         | string     | null: false                    |
 | price                | string     | null: false                    |
 | seller               | references | null: false, foreign_key: true |
 ### Association
