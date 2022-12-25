@@ -13,20 +13,21 @@ Things you may want to cover:
 
 * Database creation
 
-## Users
+## User
 | Column               | Type       | Options                        |
 |----------------------|------------|--------------------------------|
 | nickname             | text       | null: false, unique: true      |
 | email                | text       | null: false                    |
 | encrypted_password   | text       | null: false                    |
 ### Association 
-has_many :items (user - seller)
+has_many :items
+has_many :delivery_info
 
 
-## Items
+## Item
 | Column               | Type       | Options                        |
 |----------------------|------------|--------------------------------|
-| item_name            | text       | null: false                    |
+| item_name            | text       | null: false, foreign_key: true |
 | item_image           | text       | null: false                    |
 | description          | string     | null: false                    |
 | category             | string     | null: false                    |
@@ -37,28 +38,34 @@ has_many :items (user - seller)
 | price                | string     | null: false                    |
 | seller               | references | null: false, foreign_key: true |
 ### Association
-belongs_to :items (user - seller)
-has_one :buying_log(item_id?)
+belongs_to :user
+has_one :purchase_log
 
 
-## Buying_log
+## Purchase_log
 | Column               | Type      | Options                        |
 |----------------------|-----------|--------------------------------|
 | buyer                | string    | null: false, foreign_key: true |
-| to_address           | string    |                                |
-| seller               | string    | null: false, foreign_key: true |
+| item                 | string    | null: false, foreign_key: true |
 ### Association
-has_many :items (user - seller)
+has_many :user
+has_one :items
+has_one :delivery_info
 
 
-## Delivery_Address
+## Delivery_info
 | Column               | Type      | Options                        |
 |----------------------|-----------|--------------------------------|
 | buyer                | string    | null: false, foreign_key: true |
-| address              | string    |                                |
-| seller               | string    | null: false, foreign_key: true |
+| address_postcode     | string    | null: false                    |
+| address_city         | string    | null: false                    |
+| address_cho          | string    | null: false                    |
+| address_other        | string    | null: false                    |
+| address_building     | string    |                                |
+| tel_number           | string    | null: false                    |
 ### Association
-has_many :buying_log (user - seller)
+has_one :purchase_log
+belongs_to :user
 
 
 
