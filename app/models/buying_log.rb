@@ -1,0 +1,2 @@
+class BuyingLog < ApplicationRecord
+end
