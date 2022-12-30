@@ -23,12 +23,10 @@ Things you may want to cover:
 | lastname_kanji       | string     | null: false                    |
 | firstname_katakana   | string     | null: false                    |
 | lastname_katakana    | string     | null: false                    |
-| birthday_year        | integer    | null: false                    |
-| birthday_month       | integer    | null: false                    |
-| birthday_day         | integer    | null: false                    |
+| birthday             | date       | null: false                    |
 ### Association 
 has_many :items
-has_many :delivery_info
+has_many :purchase_logs
 
 
 ## Items
@@ -40,28 +38,30 @@ has_many :delivery_info
 | condition_id         | integer    | null: false                    |
 | cost_person_id       | integer    | null: false                    |
 | prefecture_id        | integer    | null: false                    |
-| prepare_days_id      | integer    | null: false                    |
+| prepare_day_id       | integer    | null: false                    |
 | price                | integer    | null: false                    |
 | user                 | references | null: false, foreign_key: true |
 ### Association
-belongs_to :users
-has_one :purchase_logs
+belongs_to :user
+has_one :purchase_log
 
 
 ## Purchase_logs
 | Column               | Type       | Options                        |
 |----------------------|------------|--------------------------------|
+| id                   | integer    | null: false, unique: true      |
 | user                 | references | null: false, foreign_key: true |
 | item                 | references | null: false, foreign_key: true |
 ### Association
-has_many :users
-has_one :items
+has_one :user
+belongs_to :item
 has_one :delivery_info
 
 
-## Delivery_info
+## Delivery_infos
 | Column               | Type       | Options                        |
 |----------------------|------------|--------------------------------|
+| purchase_log         | references | null: false, foreign_key: true |
 | address_postcode     | string     | null: false                    |
 | prefecture_id        | integer    | null: false                    |
 | address_cho          | string     | null: false                    |
@@ -69,8 +69,7 @@ has_one :delivery_info
 | address_building     | string     |                                |
 | tel_number           | string     | null: false                    |
 ### Association
-has_one :purchase_logs
-belongs_to :users
+belongs_to :purchase_log
 
 
 
