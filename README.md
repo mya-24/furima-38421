@@ -49,11 +49,10 @@ has_one :purchase_log
 ## Purchase_logs
 | Column               | Type       | Options                        |
 |----------------------|------------|--------------------------------|
-| id                   | integer    | null: false, unique: true      |
 | user                 | references | null: false, foreign_key: true |
 | item                 | references | null: false, foreign_key: true |
 ### Association
-has_one :user
+belongs_to :user
 belongs_to :item
 has_one :delivery_info
 
