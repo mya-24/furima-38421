@@ -1,10 +1,10 @@
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to :Category
-  belongs_to :Condition
-  belongs_to :Costperson
-  belongs_to :Prefecture
-  belongs_to :Prepareday
+  belongs_to :category
+  belongs_to :condition
+  belongs_to :costperson
+  belongs_to :prefecture
+  belongs_to :prepareday
 
   #バリデーション
   validates :item_name,   presence: true
@@ -20,7 +20,7 @@ class Item < ApplicationRecord
   validates :prepareday_id,   numericality: { other_than: 0, message: "can't be blank" }
 
   belongs_to :user
-  has_one :purchase_log
+  #has_one :purchase_log
   
   has_one_attached :image
 
