@@ -36,9 +36,9 @@ has_many :purchase_logs
 | description          | text       | null: false                    |
 | category_id          | integer    | null: false                    |
 | condition_id         | integer    | null: false                    |
-| cost_person_id       | integer    | null: false                    |
+| costperson_id        | integer    | null: false                    |
 | prefecture_id        | integer    | null: false                    |
-| prepare_day_id       | integer    | null: false                    |
+| prepareday_id        | integer    | null: false                    |
 | price                | integer    | null: false                    |
 | user                 | references | null: false, foreign_key: true |
 ### Association
