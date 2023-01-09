@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create] #,:edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update] #, :destroy]
 
   def index
     @items = Item.all.order("created_at desc")
@@ -18,9 +18,21 @@ class ItemsController < ApplicationController
     end
   end
 
-  # def edit
-  #   @item = Item.find(params[:id])
-  # end
+  def edit
+    @item = Item.find(params[:id])
+    if current_user.id != @item.user.id #|| (商品が売却済みなら)
+      redirect_to root_path
+    end
+  end
+
+  def update
+    @item = Item.find(params[:id])
+    if @item.update(create_item)
+      redirect_to item_path(@item)
+    else
+      render :edit
+    end
+  end
 
   def show
     @item = Item.find(params[:id])
