@@ -129,6 +129,15 @@
     <ul class='item-lists'>
 
 
+    <%# 売却済みリストを作成する %>
+    <% sold_items = [] %>
+    <% solds = PurchaseLog.all %>
+
+    <% solds.each do |sold| %>
+      <% sold_items << sold.item_id %>
+    <% end %>
+
+
     <% if @items.length > 0 %>
       <% @items.each do |item|  %>
         
@@ -138,12 +147,13 @@
 
           <div class='item-img-content'>
             <%= image_tag item.image, class: "item-img" %>
-
-            <%# 商品が売れていればsold outを表示しましょう %>
-            <%# <div class='sold-out'>
-              <span>Sold Out!!</span>
-            </div> %>
-            <%# //商品が売れていればsold outを表示しましょう %>
+            
+            <%# 売却済みリストにあればSold Outを表示 %>
+            <% if sold_items.include?(item.id) %>
+              <div class='sold-out'>
+                <span>Sold Out!!</span>
+              </div>
+            <% end %>
 
           </div>
 
