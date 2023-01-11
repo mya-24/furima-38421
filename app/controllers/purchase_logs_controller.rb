@@ -26,7 +26,15 @@ class PurchaseLogsController < ApplicationController
 
   def create
     @purchaselog = Order.new(new_purchaselog)
+    item = Item.find(params[:item_id])
     if @purchaselog.valid?
+      #以下の値を書いたままGitHubにアップロードしない
+      Payjp.api_key = ENV["PAYJP_SECRET_KEY"]  # 自身のPAY.JPテスト秘密鍵を記述しましょう
+      Payjp::Charge.create(
+        amount: item.price,             # 商品の値段
+        card: @purchaselog.token,       # カードトークン
+        currency: 'jpy'                 # 通貨の種類（日本円）
+      )
       @purchaselog.save
       redirect_to root_path
     else
@@ -38,8 +46,7 @@ class PurchaseLogsController < ApplicationController
   private
 
   def new_purchaselog
-    item = Item.find(params[:item_id])
-    params.require(:order).permit(:address_postcode, :prefecture_id, :address_cho, :address_other, :address_building, :tel_number).merge(user_id: current_user.id, item_id: item.id)
+    params.require(:order).permit(:address_postcode, :prefecture_id, :address_cho, :address_other, :address_building, :tel_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
   end
 
 end
