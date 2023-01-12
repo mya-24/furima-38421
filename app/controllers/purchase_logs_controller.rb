@@ -27,8 +27,8 @@ class PurchaseLogsController < ApplicationController
   def create
     @purchaselog = Order.new(new_purchaselog)
     item = Item.find(params[:item_id])
+    binding.pry
     if @purchaselog.valid?
-      #以下の値を書いたままGitHubにアップロードしない
       Payjp.api_key = ENV["PAYJP_SECRET_KEY"]  # 自身のPAY.JPテスト秘密鍵を記述しましょう
       Payjp::Charge.create(
         amount: item.price,             # 商品の値段

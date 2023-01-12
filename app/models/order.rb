@@ -3,7 +3,7 @@ class Order
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  attr_accessor :user_id, :item_id, :address_postcode, :prefecture_id, :address_cho, :address_other, :address_building, :tel_number, :purchaselog_id, :token
+  attr_accessor :user_id, :item_id, :address_postcode, :prefecture_id, :address_cho, :address_other, :address_building, :tel_number, :token
 
   validates :user_id,           presence: true
   validates :item_id,           presence: true
@@ -11,7 +11,7 @@ class Order
   validates :prefecture_id,     presence: true, numericality: { other_than: 0, message: "can't be blank" }
   validates :address_cho,       presence: true
   validates :address_other,     presence: true
-  validates :tel_number,        presence: true, format: { with: /\A\d{10,11}\z/, message: 'must be 10-11 digits number(NOT enter "-")'}
+  validates :tel_number,        presence: true, format: { with: /\A[0-9]{10,11}\z/, message: 'must be 10-11 digits 半角 number(NOT enter - )'}
   validates :token,             presence: true
 
   def save
