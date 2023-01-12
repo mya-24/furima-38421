@@ -28,11 +28,6 @@ test:
   <<: *default
   database: furima_38421_test
 
-production:
-  <<: *default
-  adapter: postgresql
-  url: <%= ENV['DATABASE_URL'] %>
-
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
 # ever seen by anyone, they now have access to your database.
@@ -52,8 +47,8 @@ production:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
+
 production:
   <<: *default
-  database: furima_38421_production
-  username: furima_38421
-  password: <%= ENV['FURIMA_38421_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  url: <%= ENV['DATABASE_URL'] %>
