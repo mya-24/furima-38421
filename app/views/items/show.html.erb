@@ -9,16 +9,8 @@
     <div class="item-img-content">
       <%= image_tag @item.image ,class:"item-box-img" %>
 
-      <%# 売却済みリストを作成する %>
-      <% sold_items = [] %>
-      <% solds = PurchaseLog.all %>
-
-      <% solds.each do |sold| %>
-        <% sold_items << sold.item_id %>
-      <% end %>
-
       <%# 売却済みリストにあればSold Outを表示 %>
-      <% if sold_items.include?(@item.id) %>
+      <% if @item.purchase_log %>
         <div class='sold-out'>
           <span>Sold Out!!</span>
         </div>
@@ -35,17 +27,20 @@
     </div>
 
     <%# ログインしているユーザーが出品者と　等しく　かつ　商品が未売却なら %>
-    <% if user_signed_in? && current_user.id == @item.user.id && !sold_items.include?(@item.id) %>
+    <% if user_signed_in? && !@item.purchase_log %>
 
-      <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>
-      <p class="or-text">or</p>
-      <%= link_to "削除", item_path(@item), method: :delete, class:"item-destroy" %>
+      <% if current_user.id == @item.user.id %>
 
-    <%# ログインしているユーザーが出品者と　違っており　かつ　商品が未売却なら %>
-    <% elsif user_signed_in? && current_user.id != @item.user.id && !sold_items.include?(@item.id) %>
+        <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>
+        <p class="or-text">or</p>
+        <%= link_to "削除", item_path(@item), method: :delete, class:"item-destroy" %>
+
+      <%# ログインしているユーザーが出品者と　違っており　かつ　商品が未売却なら %>
+      <% else %>
 
           <%= link_to "購入画面に進む", item_purchase_logs_path(@item), class:"item-red-btn"%>
-    
+      <% end %>
+      
     <% end %>
     <%# ログインしていない　もしくは　商品が売却済み　なら　何のボタンも出ない %>
 

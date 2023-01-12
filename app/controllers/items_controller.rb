@@ -21,16 +21,8 @@ class ItemsController < ApplicationController
 
   def edit
 
-    #売却済みリスト
-    sold_items = []
-    solds = PurchaseLog.all
-
-    solds.each do |sold|
-      sold_items << sold.item_id
-    end
-
     #ログインユーザーと出品者が等しくない　または　今回のアイテムが売却済みなら
-    if current_user.id != @item.user.id || sold_items.include?(@item.id)
+    if current_user.id != @item.user.id || @item.purchase_log
       redirect_to root_path
     end
   end

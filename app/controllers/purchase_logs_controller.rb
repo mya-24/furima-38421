@@ -3,24 +3,13 @@ class PurchaseLogsController < ApplicationController
   before_action :find_item, only: [:index, :create]
 
   def index
-    #売却済みリスト
-    sold_items = []
-    solds = PurchaseLog.all
-
-    solds.each do |sold|
-      sold_items << sold.item_id
-    end
 
     #ログインユーザーと出品者が等しくない　かつ　今回のアイテムが売却済みリストにない
-    if current_user.id != @item.user.id && !sold_items.include?(@item.id)
+    if current_user.id != @item.user.id && !@item.purchase_log
       @purchaselog = Order.new
     else
       redirect_to root_path
     end
-  end
-
-  def new
-    @purchaselog = Order.new
   end
 
   def create
