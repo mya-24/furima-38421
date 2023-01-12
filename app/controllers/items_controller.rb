@@ -20,7 +20,9 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    if current_user.id != @item.user.id #|| (商品が売却済みなら)
+
+    #ログインユーザーと出品者が等しくない　または　今回のアイテムが売却済みなら
+    if current_user.id != @item.user.id || @item.purchase_log
       redirect_to root_path
     end
   end

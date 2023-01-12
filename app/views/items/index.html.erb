@@ -128,7 +128,6 @@
     </div>
     <ul class='item-lists'>
 
-
     <% if @items.length > 0 %>
       <% @items.each do |item|  %>
         
@@ -138,12 +137,13 @@
 
           <div class='item-img-content'>
             <%= image_tag item.image, class: "item-img" %>
-
-            <%# 商品が売れていればsold outを表示しましょう %>
-            <%# <div class='sold-out'>
-              <span>Sold Out!!</span>
-            </div> %>
-            <%# //商品が売れていればsold outを表示しましょう %>
+            
+            <%# 売却済みリストにあればSold Outを表示 %>
+            <% if item.purchase_log %>
+              <div class='sold-out'>
+                <span>Sold Out!!</span>
+              </div>
+            <% end %>
 
           </div>
 
