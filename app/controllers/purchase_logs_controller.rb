@@ -1,9 +1,8 @@
 class PurchaseLogsController < ApplicationController
   before_action :authenticate_user!, only: [:index, :new, :create]
+  before_action :find_item, only: [:index, :create]
 
   def index
-    @item = Item.find(params[:item_id])
-
     #売却済みリスト
     sold_items = []
     solds = PurchaseLog.all
@@ -26,7 +25,6 @@ class PurchaseLogsController < ApplicationController
 
   def create
     @purchaselog = Order.new(new_purchaselog)
-    item = Item.find(params[:item_id])
     if @purchaselog.valid?
       Payjp.api_key = ENV["PAYJP_SECRET_KEY"]  # 自身のPAY.JPテスト秘密鍵を記述しましょう
       Payjp::Charge.create(
@@ -37,7 +35,6 @@ class PurchaseLogsController < ApplicationController
       @purchaselog.save
       redirect_to root_path
     else
-      @item = Item.find(params[:item_id])
       render 'index'
     end
   end
@@ -46,6 +43,10 @@ class PurchaseLogsController < ApplicationController
 
   def new_purchaselog
     params.require(:order).permit(:address_postcode, :prefecture_id, :address_cho, :address_other, :address_building, :tel_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
+  end
+
+  def find_item
+    @item = Item.find(params[:item_id])
   end
 
 end
